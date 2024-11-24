@@ -20,6 +20,7 @@ function Form(props) {
     };
 
     const handleSignUpClick = (e) => {      
+      e.preventDefault();
       setSignUpClicked(!isSignUpClicked);
     }
 
@@ -58,7 +59,7 @@ function Form(props) {
 
 {!props.isLoggedIn && (<form className="form"><button onClick= {handleSignUpClick} type="submit">{!isSignUpClicked ? "Sign Up": "Cancel"}</button></form>)}
 {props.isLoggedIn && 
-(<div><h2>You are Logged In</h2>
+(<div><h2>You are Logged In as {user.email}</h2>
 <form className="form" onSubmit={handleLogOut}>
 <button type="submit">Log Out</button>
 </form></div>)}

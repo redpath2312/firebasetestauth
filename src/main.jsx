@@ -10,14 +10,13 @@ import { initializeApp } from 'firebase/app'
 import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, connectAuthEmulator, signInWithEmailAndPassword } from 'firebase/auth';
 
 const firebaseApp = initializeApp({
-  apiKey: "AIzaSyBykz-MF2S0f7DeOPKUcYuUOBACjLlJdjU",
-  authDomain: "test-db699.firebaseapp.com",
-  projectId: "test-db699",
-  storageBucket: "test-db699.firebasestorage.app",
-  messagingSenderId: "302246702327",
-  appId: "1:302246702327:web:dbfc5e7e10ec4a4a88b7f2"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 });
-
 const auth = getAuth(firebaseApp);
 
 try {
@@ -34,14 +33,11 @@ function Main() {
   
       const loginEmailPassword = async() => {
       const loginEmail= creds.email;
-      const loginPassword = creds.password;
-  
-      console.log(loginEmail);
-      console.log(loginPassword);  
+      const loginPassword = creds.password; 
+       
     
     try{
-      const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-      console.log(userCredential.user);
+      const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);      
       setUserErrorInfo("");
       setUserIsRegistered(true);
       setUserIsLoggedIn(true);
@@ -66,12 +62,8 @@ function Main() {
         const createEmailPassword = async () => {
           const loginEmail= creds.email;
           const loginPassword = creds.password;        
-          console.log(loginEmail);
-          console.log(loginPassword);
-
           try{
             const userCredential = await createUserWithEmailAndPassword(auth, loginEmail, loginPassword);
-            console.log(userCredential.user);
             setUserErrorInfo("");
             setUserIsRegistered(true);
             setUserIsLoggedIn(true);
@@ -87,7 +79,6 @@ function Main() {
     }
   }  
     const handleLogOut = async () => {
-      console.log("Should Log Out Now")      
       await signOut(auth);
     }
 
@@ -104,6 +95,8 @@ function Main() {
         setUserIsRegistered(false);
       }
     });
+
+    
 
     // Cleanup listener on unmount
     return () => unsubscribe();
